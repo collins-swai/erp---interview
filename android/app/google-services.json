@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "123287816401",
+    "project_id": "mzizi-erp",
+    "storage_bucket": "mzizi-erp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123287816401:android:743559b29990264376ddf0",
+        "android_client_info": {
+          "package_name": "com.example.mzizi_school_interview"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhLdvpR-YrszUnGL8k29eKn5iErM3XbiI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
