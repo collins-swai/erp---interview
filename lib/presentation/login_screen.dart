@@ -130,7 +130,8 @@ class _LoginScreenState extends State<LoginScreen> {
               key: _formKey,
               child: SafeArea(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),  // Add padding here
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  // Add padding here
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -193,31 +194,39 @@ class _LoginScreenState extends State<LoginScreen> {
                           shape: StadiumBorder(),
                           minWidth: textFieldWidth,
                           height: textFieldHeight * 0.5,
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              setState(() {
-                                FirebaseAuth.instance
-                                    .signInWithEmailAndPassword(
-                                    email: EmailController.text,
-                                    password: PasswordController.text)
-                                    .then((value) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => BottomNavScreen()));
-                                }).onError((error, stackTrace) {
-                                  print("Error ${error.toString()}");
-                                });
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text("User logged in successfully")));
-                            }
-                          },
-                          child: Text(
-                            "Login Account",
-                            style: const TextStyle(color: Colors.white),
-                          ),
+                          onPressed: isLoading
+                              ? null
+                              : () {
+                                  if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      isLoading =
+                                          true;
+                                    });
+                                    FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                            email: EmailController.text,
+                                            password: PasswordController.text)
+                                        .then((value) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  BottomNavScreen()));
+                                    }).catchError((error) {
+                                      setState(() {
+                                        isLoading =
+                                            false;
+                                      });
+                                      print("Error ${error.toString()}");
+                                    });
+                                  }
+                                },
+                          child: isLoading
+                              ? CircularProgressIndicator() // Show loader when loading
+                              : Text(
+                                  "Login Account",
+                                  style: const TextStyle(color: Colors.white),
+                                ),
                         ),
                       ),
                       Padding(

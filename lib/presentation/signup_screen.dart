@@ -189,38 +189,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       shape: StadiumBorder(),
                       minWidth: textFieldWidth,
                       height: 50,
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          setState(() {
-                            isLoading = true;
-                          });
-                          FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                              email: EmailController.text,
-                              password: PasswordController.text)
-                              .then((value) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BottomNavScreen()),
-                            ).onError((error, stackTrace) {
-                              setState(() {
-                                _errorMessage = error.toString();
-                                isLoading = false;
-                              });
-                              print("Error ${error.toString()}");
-                            });
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text("User registered successfully")),
-                            );
-                          });
-                        }
-                      },
-                      child: Text(
-                        "Create Account",
-                        style: const TextStyle(color: Colors.white),
-                      ),
+                      onPressed: isLoading
+                          ? null
+                          : () {
+                              if (_formKey.currentState!.validate()) {
+                                setState(() {
+                                  isLoading = true;
+                                });
+                                FirebaseAuth.instance
+                                    .createUserWithEmailAndPassword(
+                                        email: EmailController.text,
+                                        password: PasswordController.text)
+                                    .then((value) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            BottomNavScreen()),
+                                  ).onError((error, stackTrace) {
+                                    setState(() {
+                                      _errorMessage = error.toString();
+                                      isLoading = false;
+                                    });
+                                    print("Error ${error.toString()}");
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            "User registered successfully")),
+                                  );
+                                });
+                              }
+                            },
+                      child: isLoading
+                          ? CircularProgressIndicator()
+                          : Text(
+                              "Create Account",
+                              style: const TextStyle(color: Colors.white),
+                            ),
                     ),
                   ),
                   Padding(
