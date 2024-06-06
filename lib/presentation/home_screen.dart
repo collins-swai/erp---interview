@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                             ))),
-                    SizedBox(width: 16),
+                    SizedBox(width: 5),
                     buildCard(
                         "assets/images/euro.png",
                         "Silver",
@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           end: Alignment.bottomRight,
                         )),
                     SizedBox(
-                      width: 16,
+                      width: 5,
                     ),
                     buildCard(
                         "assets/images/bitcoin.png",
@@ -205,10 +205,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Basic type of investments",
                       "This is how you set your foot for 2020 Stock market recession. What’s next...",
                       'assets/images/pnps.png'),
-                  _buildListTile(
-                      "How much can you start wit..",
-                      "What do you like to see? It’s a very different market from 2018. The way...",
-                      'assets/images/shapes.png'),
                 ],
               ),
             )

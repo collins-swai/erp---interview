@@ -5,6 +5,10 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:mzizi_school_interview/presentation/account_screen.dart';
 import 'package:mzizi_school_interview/presentation/home_screen.dart';
+import 'package:mzizi_school_interview/presentation/notification_screen.dart';
+import 'package:mzizi_school_interview/presentation/product_screen.dart';
+import 'package:mzizi_school_interview/presentation/profile_screen.dart';
+import 'package:mzizi_school_interview/theme/color_constant.dart';
 
 class BottomNavScreen extends StatefulWidget {
   const BottomNavScreen({super.key});
@@ -15,64 +19,50 @@ class BottomNavScreen extends StatefulWidget {
 
 class _BottomNavScreenState extends State<BottomNavScreen> {
   int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     List<Widget> _widgetOptions = <Widget>[
-      HomeScreen(
-      ),
-      AccountScreen(
-      ),
+      HomeScreen(),
+      ProductScreen(),
+      NotificationScreen(),
+      ProfileScreen(),
     ];
 
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 20,
-                color: Colors.black.withOpacity(.1),
-              )
-            ],
-          ),
-          child: SafeArea(
-            child: Padding(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 25.0, vertical: 8),
-              child: GNav(
-                rippleColor: Colors.grey[300]!,
-                hoverColor: Colors.grey[100]!,
-                gap: 10,
-                activeColor: Colors.black,
-                iconSize: 24,
-                padding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                duration: const Duration(milliseconds: 400),
-                tabBackgroundColor: Colors.grey[100]!,
-                color: Colors.black,
-                tabs: [
-                  const GButton(
-                    icon: LineIcons.home,
-                    text: 'Home',
-                  ),
-                  const GButton(
-                    icon: LineIcons.addressCard,
-                    text: 'Account',
-                  ),
-                ],
-                selectedIndex: _selectedIndex,
-                onTabChange: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
-              ),
+        backgroundColor: ColorConstant.gray900,
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: ColorConstant.backgroundGreen,
+          unselectedItemColor: ColorConstant.gray900,
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+
+              backgroundColor: ColorConstant.gray600,
+              icon: Icon(Icons.home),
+              label: 'Home',
             ),
-          ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Product',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.currency_exchange),
+              label: 'Transactions',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline_sharp),
+              label: 'Account',
+            ),
+          ],
         ),
         body: _widgetOptions?.elementAt(_selectedIndex),
       ),
