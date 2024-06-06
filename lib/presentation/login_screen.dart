@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:mzizi_school_interview/presentation/account_screen.dart';
 import 'package:mzizi_school_interview/presentation/bottom_nav_screen.dart';
-import 'package:mzizi_school_interview/presentation/home_screen.dart';
 import 'package:mzizi_school_interview/presentation/signup_screen.dart';
 import 'package:mzizi_school_interview/theme/app_style.dart';
 import 'package:mzizi_school_interview/theme/color_constant.dart';
@@ -26,9 +24,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double textFieldWidth = screenWidth * 0.9;
+    final double textFieldHeight = screenHeight * 0.1;
+
     final emailField = TextFormField(
       controller: EmailController,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.emailAddress,
       textAlignVertical: TextAlignVertical.center,
       autofocus: false,
       validator: (value) {
@@ -38,26 +41,27 @@ class _LoginScreenState extends State<LoginScreen> {
         return null;
       },
       decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: ColorConstant.plainGrey),
-          ),
-          errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Colors.red),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: ColorConstant.teal800),
-          ),
-          label: Text("Email address"),
-          contentPadding: EdgeInsets.fromLTRB(14.0, 1.0, 4.0, 2.0),
-          labelStyle: AppStyle.txtInterMedium18.copyWith(
-            letterSpacing: 0.50,
-            height: 1.00,
-          ),
-          filled: true,
-          fillColor: ColorConstant.whiteA700),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: ColorConstant.plainGrey),
+        ),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: Colors.red),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: ColorConstant.teal800),
+        ),
+        label: Text("Email address"),
+        contentPadding: EdgeInsets.fromLTRB(14.0, 1.0, 4.0, 2.0),
+        labelStyle: AppStyle.txtInterMedium18.copyWith(
+          letterSpacing: 0.50,
+          height: 1.00,
+        ),
+        filled: true,
+        fillColor: ColorConstant.whiteA700,
+      ),
     );
 
     final passwordField = TextFormField(
@@ -72,37 +76,33 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         return null;
       },
-      obscureText: true,
+      obscureText: _isHidden,
       decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: ColorConstant.plainGrey),
         ),
         errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 1, color: ColorConstant.plainGrey),
+          borderSide: BorderSide(width: 1, color: Colors.red),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: ColorConstant.teal800),
         ),
+        label: Text("Password"),
         contentPadding: EdgeInsets.fromLTRB(14.0, 1.0, 4.0, 2.0),
-        labelStyle: AppStyle.txtInterMedium20.copyWith(
+        labelStyle: AppStyle.txtInterMedium18.copyWith(
           letterSpacing: 0.50,
           height: 1.00,
         ),
-        label: Text(
-          "Password",
-        ),
         filled: true,
-        errorText: _errorMessage,
-        alignLabelWithHint: true,
         fillColor: ColorConstant.whiteA700,
-        suffix: Container(
-          padding: getPadding(right: 5, top: 4),
-          child: InkWell(
-            onTap: _togglePasswordView,
-            child: Icon(
-              _isHidden ? Icons.visibility : Icons.visibility_off,
-              color: ColorConstant.lightGray,
-            ),
+        suffixIcon: InkWell(
+          onTap: _togglePasswordView,
+          child: Icon(
+            _isHidden ? Icons.visibility : Icons.visibility_off,
+            color: ColorConstant.lightGray,
           ),
         ),
       ),
@@ -123,179 +123,129 @@ class _LoginScreenState extends State<LoginScreen> {
         shadowColor: ColorConstant.whiteA700,
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 15),
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Login to your account",
-                          style: TextStyle(
-                            color: ColorConstant.black,
-                            fontSize: getFontSize(
-                              34,
-                            ),
-                            fontFamily: 'DM Sans',
-                            fontWeight: FontWeight.w700,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),  // Add padding here
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.02),
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Login to your account",
+                                style: TextStyle(
+                                  color: ColorConstant.black,
+                                  fontSize: getFontSize(34),
+                                  fontFamily: 'DM Sans',
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.01),
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Invest and double your income now",
+                                style: TextStyle(
+                                  color: ColorConstant.black,
+                                  fontSize: getFontSize(17),
+                                  fontFamily: 'SF Pro Text',
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.05),
+                        child: Container(
+                          width: textFieldWidth,
+                          child: emailField,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.02),
+                        child: Container(
+                          width: textFieldWidth,
+                          child: passwordField,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.03),
+                        child: MaterialButton(
+                          color: ColorConstant.teal800,
+                          shape: StadiumBorder(),
+                          minWidth: textFieldWidth,
+                          height: textFieldHeight * 0.5,
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              setState(() {
+                                FirebaseAuth.instance
+                                    .signInWithEmailAndPassword(
+                                    email: EmailController.text,
+                                    password: PasswordController.text)
+                                    .then((value) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => BottomNavScreen()));
+                                }).onError((error, stackTrace) {
+                                  print("Error ${error.toString()}");
+                                });
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("User logged in successfully")));
+                            }
+                          },
+                          child: Text(
+                            "Login Account",
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
-                      ],
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 5),
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Invest and double your income now",
-                          style: TextStyle(
-                            color: ColorConstant.black,
-                            fontSize: getFontSize(
-                              17,
-                            ),
-                            fontFamily: 'SF Pro Text',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Padding(
-                  padding: getPadding(top: 60),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      height: getVerticalSize(74.00),
-                      width: getHorizontalSize(396.00),
-                      margin: getMargin(left: 16, right: 16, bottom: 4),
-                      child: Stack(
-                        alignment: Alignment.topLeft,
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                              height: getVerticalSize(
-                                74.00,
-                              ),
-                              width: getHorizontalSize(
-                                396.00,
-                              ),
-                              margin: getMargin(
-                                top: 10,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: emailField,
-                          ),
-                        ],
                       ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: getPadding(top: 0.5),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      height: getVerticalSize(74.00),
-                      width: getHorizontalSize(396.00),
-                      margin: getMargin(left: 16, right: 16, bottom: 4),
-                      child: Stack(
-                        alignment: Alignment.topLeft,
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                              height: getVerticalSize(
-                                74.00,
-                              ),
-                              width: getHorizontalSize(
-                                396.00,
-                              ),
-                              margin: getMargin(
-                                top: 10,
-                              ),
-                            ),
+                      Padding(
+                        padding: EdgeInsets.only(top: screenHeight * 0.02),
+                        child: TextButton(
+                          child: Text(
+                            "Don't have an account?",
+                            style: TextStyle(
+                                color: ColorConstant.green,
+                                fontSize: getFontSize(17),
+                                fontFamily: 'SF Pro Text',
+                                fontWeight: FontWeight.w400),
                           ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: passwordField,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 25),
-                  child: MaterialButton(
-                    color: ColorConstant.teal800,
-                    shape: StadiumBorder(),
-                    minWidth: 370,
-                    height: 50,
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          FirebaseAuth.instance
-                              .signInWithEmailAndPassword(
-                                  email: EmailController.text,
-                                  password: PasswordController.text)
-                              .then((value) {
+                          onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => BottomNavScreen()));
-                          }).onError((error, stackTrace) {
-                            print("Error ${error.toString()}");
-                          });
-                        });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text("User logged in successfully")));
-                      }
-                    },
-                    child: Text(
-                      "Login Account",
-                      style: const TextStyle(color: Colors.white),
-                    ),
+                                    builder: (context) => SignUpScreen()));
+                          },
+                        ),
+                      )
+                    ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: TextButton(
-                    child: Text(
-                      "Don't have an account?",
-                      style: TextStyle(
-                          color: ColorConstant.green,
-                          fontSize: getFontSize(17),
-                          fontFamily: 'SF Pro Text',
-                          fontWeight: FontWeight.w400),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignUpScreen()));
-                    },
-                  ),
-                )
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

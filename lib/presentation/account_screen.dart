@@ -15,131 +15,143 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: ColorConstant.whiteA700,
       body: SafeArea(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 50),
-                  child: Container(
-                    height: 300,
-                    width: double.infinity,
-                    child: Image.asset("assets/images/currency.png"),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: screenHeight * 0.07),
+                    child: Container(
+                      height: screenHeight * 0.35,
+                      width: double.infinity,
+                      child: Image.asset("assets/images/currency.png",
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: screenHeight * 0.03),
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "Stay on top of your\n",
+                        style: TextStyle(
+                          color: ColorConstant.black,
+                          fontSize: getFontSize(
+                            34,
+                          ),
+                          fontFamily: 'DM Sans',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "   finance with us.",
+                        style: TextStyle(
+                          color: ColorConstant.black,
+                          fontSize: getFontSize(
+                            34,
+                          ),
+                          fontFamily: 'DM Sans',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    top: screenHeight * 0.03,
+                    left: screenWidth * 0.1,
+                    right: screenWidth * 0.1),
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "   We are your new financial Advisors \n",
+                        style: TextStyle(
+                          color: ColorConstant.blackGrey,
+                          fontSize: getFontSize(
+                            17,
+                          ),
+                          fontFamily: 'SF Pro Text',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "to recommend the best investments for \n",
+                        style: TextStyle(
+                          color: ColorConstant.blackGrey,
+                          fontSize: getFontSize(
+                            17,
+                          ),
+                          fontFamily: 'SF Pro Text',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      TextSpan(
+                        text: "                              you",
+                        style: TextStyle(
+                          color: ColorConstant.blackGrey,
+                          fontSize: getFontSize(
+                            17,
+                          ),
+                          fontFamily: 'SF Pro Text',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: screenHeight * 0.1),
+                child: MaterialButton(
+                  color: ColorConstant.teal800,
+                  shape: StadiumBorder(),
+                  minWidth: screenWidth * 0.7,
+                  height: screenHeight * 0.07,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignUpScreen()));
+                  },
+                  child: Text(
+                    "Create Account",
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 25),
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Stay on top of your\n",
-                      style: TextStyle(
-                        color: ColorConstant.black,
-                        fontSize: getFontSize(
-                          34,
-                        ),
-                        fontFamily: 'DM Sans',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    TextSpan(
-                      text: "   finance with us.",
-                      style: TextStyle(
-                        color: ColorConstant.black,
-                        fontSize: getFontSize(
-                          34,
-                        ),
-                        fontFamily: 'DM Sans',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-                textAlign: TextAlign.left,
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 25),
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "   We are your new financial Advisors \n",
+              Padding(
+                padding: EdgeInsets.only(top: screenHeight * 0.01),
+                child: TextButton(
+                  child: Text("Login",
                       style: TextStyle(
-                        color: ColorConstant.blackGrey,
-                        fontSize: getFontSize(
-                          17,
-                        ),
-                        fontFamily: 'SF Pro Text',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    TextSpan(
-                      text: "to recommed the best investments for \n",
-                      style: TextStyle(
-                        color: ColorConstant.blackGrey,
-                        fontSize: getFontSize(
-                          17,
-                        ),
-                        fontFamily: 'SF Pro Text',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    TextSpan(
-                      text: "                              you",
-                      style: TextStyle(
-                        color: ColorConstant.blackGrey,
-                        fontSize: getFontSize(
-                          17,
-                        ),
-                        fontFamily: 'SF Pro Text',
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 65),
-              child: MaterialButton(
-                color: ColorConstant.teal800,
-                shape: StadiumBorder(),
-                minWidth: 270,
-                height: 50,
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignUpScreen()));
-                },
-                child: Text(
-                  "Create Account",
-                  style: const TextStyle(color: Colors.white),
+                          color: ColorConstant.green,
+                          fontSize: getFontSize(17),
+                          fontFamily: 'SF Pro Text',
+                          fontWeight: FontWeight.w400)),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                  },
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: TextButton(
-                child: Text("Login",
-                    style: TextStyle(
-                        color: ColorConstant.green,
-                        fontSize: getFontSize(17),
-                        fontFamily: 'SF Pro Text',
-                        fontWeight: FontWeight.w400)),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
-                },
-              ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -26,6 +26,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double padding = screenWidth * 0.05;
+    double textFieldWidth = screenWidth * 0.9;
+    double textFieldHeight = 74.0;
+
+    InputDecoration textFieldDecoration(String label) {
+      return InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: ColorConstant.plainGrey),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: Colors.red),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1, color: ColorConstant.teal800),
+        ),
+        label: Text(label),
+        contentPadding: EdgeInsets.fromLTRB(14.0, 1.0, 4.0, 2.0),
+        labelStyle: AppStyle.txtInterMedium18.copyWith(
+          letterSpacing: 0.50,
+          height: 1.00,
+        ),
+        filled: true,
+        fillColor: ColorConstant.whiteA700,
+      );
+    }
+
     final nameField = TextFormField(
       controller: NameController,
       keyboardType: TextInputType.name,
@@ -37,32 +67,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
         return null;
       },
-      decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: ColorConstant.plainGrey),
-          ),
-          errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Colors.red),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: ColorConstant.teal800),
-          ),
-          label: Text("Full Name"),
-          contentPadding: EdgeInsets.fromLTRB(14.0, 1.0, 4.0, 2.0),
-          labelStyle: AppStyle.txtInterMedium18.copyWith(
-            letterSpacing: 0.50,
-            height: 1.00,
-          ),
-          filled: true,
-          fillColor: ColorConstant.whiteA700),
+      decoration: textFieldDecoration("Full Name"),
     );
 
     final emailField = TextFormField(
       controller: EmailController,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.emailAddress,
       textAlignVertical: TextAlignVertical.center,
       autofocus: false,
       validator: (value) {
@@ -71,27 +81,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         }
         return null;
       },
-      decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: ColorConstant.plainGrey),
-          ),
-          errorBorder: const OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: Colors.red),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(width: 1, color: ColorConstant.teal800),
-          ),
-          label: Text("Email address"),
-          contentPadding: EdgeInsets.fromLTRB(14.0, 1.0, 4.0, 2.0),
-          labelStyle: AppStyle.txtInterMedium18.copyWith(
-            letterSpacing: 0.50,
-            height: 1.00,
-          ),
-          filled: true,
-          fillColor: ColorConstant.whiteA700),
+      decoration: textFieldDecoration("Email address"),
     );
 
     final passwordField = TextFormField(
@@ -100,44 +90,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
       keyboardType: TextInputType.visiblePassword,
       validator: (value) {
         if (value!.isEmpty) {
-          return "Password";
+          return "Password is required.";
         } else if (value.length < 6) {
-          return "Password";
+          return "Password must be at least 6 characters.";
         }
         return null;
       },
-      obscureText: true,
-      decoration: InputDecoration(
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 1, color: ColorConstant.plainGrey),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 1, color: ColorConstant.plainGrey),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: 1, color: ColorConstant.teal800),
-        ),
-        contentPadding: EdgeInsets.fromLTRB(14.0, 1.0, 4.0, 2.0),
-        labelStyle: AppStyle.txtInterMedium20.copyWith(
-          letterSpacing: 0.50,
-          height: 1.00,
-        ),
-        label: Text(
-          "Password",
-        ),
-        filled: true,
+      obscureText: _isHidden,
+      decoration: textFieldDecoration("Password").copyWith(
         errorText: _errorMessage,
-        alignLabelWithHint: true,
-        fillColor: ColorConstant.whiteA700,
-        suffix: Container(
-          padding: getPadding(right: 5, top: 4),
-          child: InkWell(
-            onTap: _togglePasswordView,
-            child: Icon(
-              _isHidden ? Icons.visibility : Icons.visibility_off,
-              color: ColorConstant.lightGray,
-            ),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _isHidden ? Icons.visibility : Icons.visibility_off,
+            color: ColorConstant.lightGray,
           ),
+          onPressed: _togglePasswordView,
         ),
       ),
     );
@@ -161,210 +128,124 @@ class _SignUpScreenState extends State<SignUpScreen> {
         body: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 15),
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Create an account",
-                          style: TextStyle(
-                            color: ColorConstant.black,
-                            fontSize: getFontSize(
-                              34,
-                            ),
-                            fontFamily: 'DM Sans',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 5),
-                  child: RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: "Invest and double your income now",
-                          style: TextStyle(
-                            color: ColorConstant.black,
-                            fontSize: getFontSize(
-                              17,
-                            ),
-                            fontFamily: 'SF Pro Text',
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-                Padding(
-                  padding: getPadding(top: 45),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      height: getVerticalSize(74.00),
-                      width: getHorizontalSize(396.00),
-                      margin: getMargin(left: 16, right: 16, bottom: 4),
-                      child: Stack(
-                        alignment: Alignment.topLeft,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: padding),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: RichText(
+                      text: TextSpan(
                         children: [
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                              height: getVerticalSize(
-                                74.00,
-                              ),
-                              width: getHorizontalSize(
-                                396.00,
-                              ),
-                              margin: getMargin(
-                                top: 10,
-                              ),
+                          TextSpan(
+                            text: "Create an account",
+                            style: TextStyle(
+                              color: ColorConstant.black,
+                              fontSize: getFontSize(34),
+                              fontFamily: 'DM Sans',
+                              fontWeight: FontWeight.w700,
                             ),
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: nameField,
                           ),
                         ],
                       ),
+                      textAlign: TextAlign.left,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: getPadding(top: 0.5),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      height: getVerticalSize(74.00),
-                      width: getHorizontalSize(396.00),
-                      margin: getMargin(left: 16, right: 16, bottom: 4),
-                      child: Stack(
-                        alignment: Alignment.topLeft,
+                  Padding(
+                    padding: EdgeInsets.only(top: 5),
+                    child: RichText(
+                      text: TextSpan(
                         children: [
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                              height: getVerticalSize(
-                                74.00,
-                              ),
-                              width: getHorizontalSize(
-                                396.00,
-                              ),
-                              margin: getMargin(
-                                top: 10,
-                              ),
+                          TextSpan(
+                            text: "Invest and double your income now",
+                            style: TextStyle(
+                              color: ColorConstant.black,
+                              fontSize: getFontSize(17),
+                              fontFamily: 'SF Pro Text',
+                              fontWeight: FontWeight.w400,
                             ),
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: emailField,
                           ),
                         ],
                       ),
+                      textAlign: TextAlign.left,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: getPadding(top: 0.5),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      height: getVerticalSize(74.00),
-                      width: getHorizontalSize(396.00),
-                      margin: getMargin(left: 16, right: 16, bottom: 4),
-                      child: Stack(
-                        alignment: Alignment.topLeft,
-                        children: [
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Container(
-                              height: getVerticalSize(
-                                74.00,
-                              ),
-                              width: getHorizontalSize(
-                                396.00,
-                              ),
-                              margin: getMargin(
-                                top: 10,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: passwordField,
-                          ),
-                        ],
-                      ),
-                    ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 45),
+                    child: nameField,
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 25),
-                  child: MaterialButton(
-                    color: ColorConstant.teal800,
-                    shape: StadiumBorder(),
-                    minWidth: 370,
-                    height: 50,
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
+                  Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: emailField,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: passwordField,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 25),
+                    child: MaterialButton(
+                      color: ColorConstant.teal800,
+                      shape: StadiumBorder(),
+                      minWidth: textFieldWidth,
+                      height: 50,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            isLoading = true;
+                          });
                           FirebaseAuth.instance
                               .createUserWithEmailAndPassword(
-                                  email: EmailController.text,
-                                  password: PasswordController.text)
+                              email: EmailController.text,
+                              password: PasswordController.text)
                               .then((value) {
                             Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => BottomNavScreen()))
-                                .onError((error, stackTrace) {
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BottomNavScreen()),
+                            ).onError((error, stackTrace) {
+                              setState(() {
+                                _errorMessage = error.toString();
+                                isLoading = false;
+                              });
                               print("Error ${error.toString()}");
                             });
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content:
-                                        Text("User registered successfully")));
+                              const SnackBar(
+                                  content: Text("User registered successfully")),
+                            );
                           });
-                          isLoading = true;
-                        });
-                      }
-                      print("printed");
-                    },
-                    child: Text(
-                      "Create Account",
-                      style: const TextStyle(color: Colors.white),
+                        }
+                      },
+                      child: Text(
+                        "Create Account",
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: TextButton(
-                    child: Text(
-                      "Already have an account?",
-                      style: TextStyle(
+                  Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: TextButton(
+                      child: Text(
+                        "Already have an account?",
+                        style: TextStyle(
                           color: ColorConstant.green,
                           fontSize: getFontSize(17),
                           fontFamily: 'SF Pro Text',
-                          fontWeight: FontWeight.w400),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LoginScreen()));
-                    },
-                  ),
-                )
-              ],
+                              builder: (context) => LoginScreen()),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),
