@@ -1,9 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:mzizi_school_interview/presentation/account_screen.dart';
 import 'package:mzizi_school_interview/presentation/home_screen.dart';
 import 'package:mzizi_school_interview/presentation/notification_screen.dart';
 import 'package:mzizi_school_interview/presentation/product_screen.dart';
@@ -45,7 +42,6 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           },
           items: [
             BottomNavigationBarItem(
-
               backgroundColor: ColorConstant.gray600,
               icon: Icon(Icons.home),
               label: 'Home',
