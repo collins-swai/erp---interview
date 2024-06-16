@@ -142,7 +142,7 @@ class ColorConstant {
   static Color black = fromHex('#000000');
 
   static Color green = fromHex('#31A062');
-  
+
   static Color red = fromHex('#FE555D');
 
   static Color gold = fromHex('#F0C735');
@@ -156,6 +156,8 @@ class ColorConstant {
   static Color violet = fromHex('#BA8DF3');
 
   static Color Violet = fromHex('#615EE2');
+
+  static Color lightGrays = fromHex('#828282');
 
   static Color fromHex(String hexString) {
     final buffer = StringBuffer();

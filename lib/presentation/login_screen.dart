@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mzizi_school_interview/presentation/account_screen.dart';
@@ -53,8 +55,8 @@ class _LoginScreenState extends State<LoginScreen> {
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: ColorConstant.teal800),
         ),
-        label: Text("Email address"),
-        contentPadding: EdgeInsets.fromLTRB(14.0, 1.0, 4.0, 2.0),
+        label: const Text("Email address"),
+        contentPadding: const EdgeInsets.fromLTRB(14.0, 1.0, 4.0, 2.0),
         labelStyle: AppStyle.txtInterMedium18.copyWith(
           letterSpacing: 0.50,
           height: 1.00,
@@ -84,14 +86,14 @@ class _LoginScreenState extends State<LoginScreen> {
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: ColorConstant.plainGrey),
         ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: Colors.red),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(width: 1, color: ColorConstant.teal800),
         ),
-        label: Text("Password"),
-        contentPadding: EdgeInsets.fromLTRB(14.0, 1.0, 4.0, 2.0),
+        label: const Text("Password"),
+        contentPadding: const EdgeInsets.fromLTRB(14.0, 1.0, 4.0, 2.0),
         labelStyle: AppStyle.txtInterMedium18.copyWith(
           letterSpacing: 0.50,
           height: 1.00,
@@ -112,11 +114,11 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: ColorConstant.whiteA700,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(Icons.arrow_back_ios_new),
           color: ColorConstant.black,
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => AccountScreen()));
+                MaterialPageRoute(builder: (context) => const AccountScreen()));
           },
         ),
         backgroundColor: ColorConstant.whiteA700,
@@ -130,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
               key: _formKey,
               child: SafeArea(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   // Add padding here
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -191,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: EdgeInsets.only(top: screenHeight * 0.03),
                         child: MaterialButton(
                           color: ColorConstant.teal800,
-                          shape: StadiumBorder(),
+                          shape: const StadiumBorder(),
                           minWidth: textFieldWidth,
                           height: textFieldHeight * 0.5,
                           onPressed: isLoading
@@ -211,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  BottomNavScreen()));
+                                                  const BottomNavScreen()));
                                     }).catchError((error) {
                                       setState(() {
                                         isLoading =
@@ -222,10 +224,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   }
                                 },
                           child: isLoading
-                              ? CircularProgressIndicator() // Show loader when loading
-                              : Text(
+                              ? const CircularProgressIndicator() // Show loader when loading
+                              : const Text(
                                   "Login Account",
-                                  style: const TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.white),
                                 ),
                         ),
                       ),
@@ -244,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignUpScreen()));
+                                    builder: (context) => const SignUpScreen()));
                           },
                         ),
                       )

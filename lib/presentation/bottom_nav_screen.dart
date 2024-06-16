@@ -19,11 +19,11 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _widgetOptions = <Widget>[
-      HomeScreen(),
-      ProductScreen(),
-      NotificationScreen(),
-      ProfileScreen(),
+    List<Widget> widgetOptions = <Widget>[
+      const HomeScreen(),
+      const ProductScreen(),
+      const NotificationScreen(),
+      const ProfileScreen(),
     ];
 
     return WillPopScope(
@@ -43,24 +43,24 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
           items: [
             BottomNavigationBarItem(
               backgroundColor: ColorConstant.gray600,
-              icon: Icon(Icons.home),
+              icon: const Icon(Icons.home),
               label: 'Home',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.search),
               label: 'Product',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.currency_exchange),
               label: 'Transactions',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.person_outline_sharp),
               label: 'Account',
             ),
           ],
         ),
-        body: _widgetOptions?.elementAt(_selectedIndex),
+        body: widgetOptions.elementAt(_selectedIndex),
       ),
     );
   }
@@ -102,6 +102,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     );
   }
 
+  // ignore: unused_element
   void _onTap(int index) {
     _selectedIndex = index;
     setState(() {});

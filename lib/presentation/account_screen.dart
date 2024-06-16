@@ -120,18 +120,18 @@ class _AccountScreenState extends State<AccountScreen> {
                 padding: EdgeInsets.only(top: screenHeight * 0.1),
                 child: MaterialButton(
                   color: ColorConstant.teal800,
-                  shape: StadiumBorder(),
+                  shape: const StadiumBorder(),
                   minWidth: screenWidth * 0.7,
                   height: screenHeight * 0.07,
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SignUpScreen()));
+                            builder: (context) => const SignUpScreen()));
                   },
-                  child: Text(
+                  child: const Text(
                     "Create Account",
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -145,8 +145,10 @@ class _AccountScreenState extends State<AccountScreen> {
                           fontFamily: 'SF Pro Text',
                           fontWeight: FontWeight.w400)),
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginScreen()));
                   },
                 ),
               ),
