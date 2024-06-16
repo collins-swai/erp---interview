@@ -101,7 +101,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         ),
                       ),
                       TextSpan(
-                        text: "                              you",
+                        text: " you",
                         style: TextStyle(
                           color: ColorConstant.blackGrey,
                           fontSize: getFontSize(
